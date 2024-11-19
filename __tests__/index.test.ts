@@ -1,4 +1,4 @@
-import { timeToCron } from "./index";
+import { timeToCron } from "../src/index";
 
 describe("@aquarela/timeToCron", () => {
   test("converts seconds correctly", () => {
@@ -52,5 +52,44 @@ describe("@aquarela/timeToCron", () => {
   test("throws error for invalid time unit", () => {
     // @ts-expect-error: Expected Invalid Time Unit Error
     expect(() => timeToCron(1, "invalid")).toThrow("Invalid time unit");
+    // @ts-expect-error: Testing invalid time units
+    expect(() => timeToCron(60, "minute")).toThrow("Invalid time unit");
+    // @ts-expect-error: Testing invalid time units
+    expect(() => timeToCron(60, "hrs")).toThrow("Invalid time unit");
+  });
+
+  test("handles boundary values correctly", () => {
+    expect(timeToCron(59)).toBe("*/59 * * * * *");
+    expect(() => timeToCron(60)).not.toThrow();
+    expect(() => timeToCron(61)).toThrow();
+  });
+
+  test("handles large values correctly", () => {
+    expect(timeToCron(86400)).toBe("0 0 0 */1 * *");
+    expect(timeToCron(172800)).toBe("0 0 0 */2 * *");
+    expect(timeToCron(864000)).toBe("0 0 0 */10 * *");
+  });
+
+  test("throws error for invalid input types", () => {
+    // @ts-expect-error: Expected Wrong Type Error
+    expect(() => timeToCron("60")).toThrow("Value must be a positive integer");
+    expect(() => timeToCron(NaN)).toThrow("Value must be a positive integer");
+    expect(() => timeToCron(Infinity)).toThrow(
+      "Value must be a positive integer"
+    );
+  });
+
+  test("throws error for null or undefined values", () => {
+    // @ts-expect-error: Expected Wrong Type Error
+    expect(() => timeToCron(null)).toThrow("Value must be a positive integer");
+    // @ts-expect-error: Expected Wrong Type Error
+    expect(() => timeToCron(undefined)).toThrow(
+      "Value must be a positive integer"
+    );
+  });
+  test("throws error when conversion results in fractions", () => {
+    expect(() => timeToCron(90, "seconds")).toThrow(
+      "Seconds value must be less than 60 or a multiple of 60"
+    );
   });
 });
