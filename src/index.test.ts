@@ -50,7 +50,7 @@ describe("@aquarela/timeToCron", () => {
   });
 
   test("throws error for invalid time unit", () => {
-    // @ts-expect-error
+    // @ts-expect-error: Expected Invalid Time Unit Error
     expect(() => timeToCron(1, "invalid")).toThrow("Invalid time unit");
   });
 });
