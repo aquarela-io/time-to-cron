@@ -6,7 +6,6 @@
  *                         For "minutes", values must be less than 60 or multiples of 60.
  *                         For "hours", values must be less than 24 or multiples of 24.
  * @param {TimeUnit} [unit="seconds"] - The unit of the time value. Can be "seconds", "minutes", "hours", or "days".
- * @param {boolean} [repeatSameDay=true] - Whether to repeat the cron job on the same day when the interval is greater than or equal to one day.
  * @returns {string} The corresponding cron expression.
  * @throws {Error} If the value is not a positive integer, if the value does not meet the unit constraints, or if an invalid time unit is provided.
  *
@@ -40,7 +39,6 @@ type TimeUnit = "seconds" | "minutes" | "hours" | "days";
 export function timeToCron(
   value: number,
   unit: TimeUnit = "seconds",
-  repeatSameDay: boolean = true
 ): string {
   if (value <= 0 || !Number.isInteger(value)) {
     throw new Error("Value must be a positive integer");
