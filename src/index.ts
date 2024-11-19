@@ -44,7 +44,7 @@ class DaysHandler implements TimeUnitHandler {
     return `0 0 0 */${value} * *`;
   }
 }
-const handlers: { [key in TimeUnit]: TimeUnitHandler } = {
+const handlers: Record<TimeUnit, TimeUnitHandler> = {
   seconds: new SecondsHandler(),
   minutes: new MinutesHandler(),
   hours: new HoursHandler(),
