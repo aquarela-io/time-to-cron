@@ -14,7 +14,6 @@
     - [Convert Minutes](#convert-minutes)
     - [Convert Hours](#convert-hours)
     - [Convert Days](#convert-days)
-    - [Disable Repeat on Same Day](#disable-repeat-on-same-day)
 - [API](#api)
 - [Validation Rules](#validation-rules)
 - [Testing](#testing)
@@ -80,14 +79,6 @@ const cronExpression = timeToCron(2, "days");
 console.log(cronExpression); // "0 0 0 */2 * *"
 ```
 
-#### Disable Repeat on Same Day
-
-Disable repeating the cron job on the same day when the interval is equal to or greater than one day. This is useful for scenarios where you want the task to run at a specific interval starting at midnight.
-
-```typescript
-const cronExpression = timeToCron(60, "minutes", false);
-console.log(cronExpression); // "0 0 0/1 * * *"
-```
 
 ## API
 
@@ -97,7 +88,6 @@ Converts a time value to a cron expression.
 
 - **value**: The time value to convert. Must be a positive integer.
 - **unit**: The unit of the time value. Can be `"seconds"`, `"minutes"`, `"hours"`, or `"days"`. Default is `"seconds"`.
-- **repeatSameDay**: (Optional) Whether to repeat the cron job on the same day when the interval is greater than or equal to one day. Default is `true`.
 
 Returns the corresponding cron expression as a string.
 
