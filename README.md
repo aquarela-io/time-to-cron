@@ -1,5 +1,7 @@
 # @aquarela/time-to-cron
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/13aba93ef2784b3288a28561bce307da)](https://app.codacy.com/gh/aquarela-io/time-to-cron/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 `@aquarela/time-to-cron` is a utility library designed to convert time intervals into cron expressions. This package is particularly useful for developers looking to schedule tasks in environments that require cron syntax, providing a simple interface to generate accurate cron schedules.
 
 ## Table of Contents
