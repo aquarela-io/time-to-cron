@@ -1,6 +1,7 @@
 # @aquarela/time-to-cron
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/13aba93ef2784b3288a28561bce307da)](https://app.codacy.com/gh/aquarela-io/time-to-cron/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/aquarela-io/time-to-cron/badge)](https://www.codefactor.io/repository/github/aquarela-io/time-to-cron)
 
 `@aquarela/time-to-cron` is a utility library designed to convert time intervals into cron expressions. This package is particularly useful for developers looking to schedule tasks in environments that require cron syntax, providing a simple interface to generate accurate cron schedules.
 
@@ -57,8 +58,8 @@ console.log(cronExpression); // "*/30 * * * * *"
 Convert a number of minutes to a cron expression. The value can be less than 60 or a multiple of 60.
 
 ```typescript
-const cronExpression = timeToCron(60, "minutes");
-console.log(cronExpression); // "0 0 */1 * * *"
+const cronExpression = timeToCron(15, "minutes");
+console.log(cronExpression); // "0 */15 * * * *"
 ```
 
 #### Convert Hours
@@ -66,8 +67,8 @@ console.log(cronExpression); // "0 0 */1 * * *"
 Convert a number of hours to a cron expression. The value must be less than 24 or a multiple of 24.
 
 ```typescript
-const cronExpression = timeToCron(2, "hours");
-console.log(cronExpression); // "0 0 */2 * * *"
+const cronExpression = timeToCron(4, "hours");
+console.log(cronExpression); // "0 0 */4 * * *"
 ```
 
 #### Convert Days
@@ -79,10 +80,9 @@ const cronExpression = timeToCron(2, "days");
 console.log(cronExpression); // "0 0 0 */2 * *"
 ```
 
-
 ## API
 
-### `timeToCron(value: number, unit: TimeUnit = "seconds", repeatSameDay: boolean = true): string`
+### `timeToCron(value: number, unit: TimeUnit = "seconds"): string`
 
 Converts a time value to a cron expression.
 
