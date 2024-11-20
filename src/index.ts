@@ -56,7 +56,7 @@ export function timeToCron(value: number, unit: TimeUnit = "seconds"): string {
     throw new Error("Value must be a positive integer");
   }
 
-  const handler = handlers[unit as keyof typeof handlers];
+  const handler = handlers[unit];
   if (!handler) {
     throw new Error("Invalid time unit");
   }
