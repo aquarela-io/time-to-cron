@@ -1,4 +1,14 @@
 type TimeUnit = "seconds" | "minutes" | "hours" | "days";
+type PredefinedSchedule =
+  | "@yearly"
+  | "@annually"
+  | "@monthly"
+  | "@weekly"
+  | "@daily"
+  | "@midnight"
+  | "@hourly"
+  | "@every12hours"
+  | "@biweekly";
 
 interface TimeUnitHandler {
   handle(value: number): string;
@@ -41,6 +51,9 @@ class HoursHandler implements TimeUnitHandler {
 }
 class DaysHandler implements TimeUnitHandler {
   handle(value: number): string {
+    if (value > 31) {
+      throw new Error("Days value must be 31 or less");
+    }
     return `0 0 0 */${value} * *`;
   }
 }
@@ -51,15 +64,49 @@ const handlers: Record<TimeUnit, TimeUnitHandler> = {
   days: new DaysHandler(),
 };
 
-export function timeToCron(value: number, unit: TimeUnit = "seconds"): string {
-  if (value <= 0 || !Number.isInteger(value)) {
-    throw new Error("Value must be a positive integer");
+function handlePredefinedSchedule(schedule: PredefinedSchedule): string {
+  switch (schedule) {
+    case "@yearly":
+    case "@annually":
+      return "0 0 0 1 1 *";
+    case "@monthly":
+      return "0 0 0 1 * *";
+    case "@weekly":
+      return "0 0 0 * * 0";
+    case "@daily":
+    case "@midnight":
+      return "0 0 0 * * *";
+    case "@hourly":
+      return "0 0 * * * *";
+    case "@every12hours":
+      return "0 0 0/12 * * *";
+    case "@biweekly":
+      return "0 0 0 * * 0/2";
+    default:
+      throw new Error("Invalid predefined schedule");
+  }
+}
+
+export function timeToCron(
+  value: number | PredefinedSchedule,
+  unit: TimeUnit = "seconds"
+): string {
+  if (typeof value === "string" && value.startsWith("@")) {
+    return handlePredefinedSchedule(value as PredefinedSchedule);
   }
 
-  const handler = handlers[unit];
-  if (!handler) {
-    throw new Error("Invalid time unit");
+  if (typeof value === "number") {
+    if (value <= 0 || !Number.isInteger(value)) {
+      throw new Error("Value must be a positive integer");
+    }
+
+    const handler = handlers[unit];
+    if (!handler) {
+      throw new Error("Invalid time unit");
+    }
+
+    return handler.handle(value);
   }
 
-  return handler.handle(value);
+  throw new Error("Invalid input: must be a integer or a predefined schedule");
 }

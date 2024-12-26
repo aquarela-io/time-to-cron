@@ -72,7 +72,9 @@ describe("@aquarela/timeToCron", () => {
 
   test("throws error for invalid input types", () => {
     // @ts-expect-error: Expected Wrong Type Error
-    expect(() => timeToCron("60")).toThrow("Value must be a positive integer");
+    expect(() => timeToCron("60")).toThrow(
+      "Invalid input: must be a integer or a predefined schedule"
+    );
     expect(() => timeToCron(NaN)).toThrow("Value must be a positive integer");
     expect(() => timeToCron(Infinity)).toThrow(
       "Value must be a positive integer"
@@ -81,15 +83,56 @@ describe("@aquarela/timeToCron", () => {
 
   test("throws error for null or undefined values", () => {
     // @ts-expect-error: Expected Wrong Type Error
-    expect(() => timeToCron(null)).toThrow("Value must be a positive integer");
+    expect(() => timeToCron(null)).toThrow(
+      "Invalid input: must be a integer or a predefined schedule"
+    );
     // @ts-expect-error: Expected Wrong Type Error
     expect(() => timeToCron(undefined)).toThrow(
-      "Value must be a positive integer"
+      "Invalid input: must be a integer or a predefined schedule"
     );
   });
   test("throws error when conversion results in fractions", () => {
     expect(() => timeToCron(90, "seconds")).toThrow(
       "Seconds value must be less than 60 or a multiple of 60"
     );
+  });
+
+  test("throws error for days greater than 31", () => {
+    expect(() => timeToCron(32, "days")).toThrow(
+      "Days value must be 31 or less"
+    );
+    expect(() => timeToCron(45, "days")).toThrow(
+      "Days value must be 31 or less"
+    );
+  });
+
+  describe("predefined schedules", () => {
+    test("handles yearly schedules", () => {
+      expect(timeToCron("@yearly")).toBe("0 0 0 1 1 *");
+      expect(timeToCron("@annually")).toBe("0 0 0 1 1 *");
+    });
+
+    test("handles monthly and weekly schedules", () => {
+      expect(timeToCron("@monthly")).toBe("0 0 0 1 * *");
+      expect(timeToCron("@weekly")).toBe("0 0 0 * * 0");
+    });
+
+    test("handles daily schedules", () => {
+      expect(timeToCron("@daily")).toBe("0 0 0 * * *");
+      expect(timeToCron("@midnight")).toBe("0 0 0 * * *");
+    });
+
+    test("handles hourly and custom intervals", () => {
+      expect(timeToCron("@hourly")).toBe("0 0 * * * *");
+      expect(timeToCron("@every12hours")).toBe("0 0 0/12 * * *");
+      expect(timeToCron("@biweekly")).toBe("0 0 0 * * 0/2");
+    });
+
+    test("throws error for invalid predefined schedule", () => {
+      // @ts-expect-error: Testing invalid predefined schedule
+      expect(() => timeToCron("@invalid")).toThrow(
+        "Invalid predefined schedule"
+      );
+    });
   });
 });

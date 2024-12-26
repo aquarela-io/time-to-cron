@@ -15,6 +15,7 @@
     - [Convert Minutes](#convert-minutes)
     - [Convert Hours](#convert-hours)
     - [Convert Days](#convert-days)
+    - [Using Predefined Schedules](#using-predefined-schedules)
 - [API](#api)
 - [Validation Rules](#validation-rules)
 - [Testing](#testing)
@@ -80,14 +81,43 @@ const cronExpression = timeToCron(2, "days");
 console.log(cronExpression); // "0 0 0 */2 * *"
 ```
 
+#### Using Predefined Schedules
+
+You can also use predefined schedule expressions for common time patterns:
+
+```typescript
+// Common time intervals
+timeToCron("@hourly"); // "0 0 * * * *"
+timeToCron("@daily"); // "0 0 0 * * *"
+timeToCron("@weekly"); // "0 0 0 * * 0"
+timeToCron("@monthly"); // "0 0 0 1 * *"
+timeToCron("@yearly"); // "0 0 0 1 1 *"
+
+// Additional schedules
+timeToCron("@midnight"); // "0 0 0 * * *" (same as @daily)
+timeToCron("@annually"); // "0 0 0 1 1 *" (same as @yearly)
+timeToCron("@every12hours"); // "0 0 0/12 * * *"
+timeToCron("@biweekly"); // "0 0 0 * * 0/2"
+```
+
 ## API
 
-### `timeToCron(value: number, unit: TimeUnit = "seconds"): string`
+### `timeToCron(value: number | PredefinedSchedule, unit?: TimeUnit): string`
 
-Converts a time value to a cron expression.
+Converts a time value or predefined schedule to a cron expression.
 
-- **value**: The time value to convert. Must be a positive integer.
-- **unit**: The unit of the time value. Can be `"seconds"`, `"minutes"`, `"hours"`, or `"days"`. Default is `"seconds"`.
+- **value**: Either a numeric time value or a predefined schedule string. When using a number, it must be a positive integer. When using a predefined schedule, it must be one of the supported schedule expressions.
+- **unit**: The unit of the time value (only used when `value` is a number). Can be `"seconds"`, `"minutes"`, `"hours"`, or `"days"`. Default is `"seconds"`.
+
+Supported predefined schedules:
+
+- `@yearly` or `@annually`: Run once a year at midnight of January 1
+- `@monthly`: Run once a month at midnight of the first day
+- `@weekly`: Run once a week at midnight on Sunday
+- `@daily` or `@midnight`: Run once a day at midnight
+- `@hourly`: Run once an hour at the beginning of the hour
+- `@every12hours`: Run every 12 hours
+- `@biweekly`: Run every two weeks
 
 Returns the corresponding cron expression as a string.
 
