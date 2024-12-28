@@ -2,6 +2,10 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/13aba93ef2784b3288a28561bce307da)](https://app.codacy.com/gh/aquarela-io/time-to-cron/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/aquarela-io/time-to-cron/badge)](https://www.codefactor.io/repository/github/aquarela-io/time-to-cron)
+![Test](https://github.com/aquarela-io/time-to-cron/actions/workflows/test.yml/badge.svg)
+![NPM Version](https://img.shields.io/npm/v/%40aquarela%2Ftime-to-cron)
+![NPM Downloads](https://img.shields.io/npm/dt/%40aquarela%2Ftime-to-cron)
+![NPM License](https://img.shields.io/npm/l/%40aquarela%2Ftime-to-cron)
 
 `@aquarela/time-to-cron` is a utility library designed to convert time intervals into cron expressions. This package is particularly useful for developers looking to schedule tasks in environments that require cron syntax, providing a simple interface to generate accurate cron schedules.
 
@@ -19,6 +23,7 @@
 - [API](#api)
 - [Validation Rules](#validation-rules)
 - [Testing](#testing)
+- [Contributing](#contributing)
 - [Repository](#repository)
 - [License](#license)
 - [Author](#author)
@@ -30,6 +35,23 @@ Install the package using npm:
 ```sh
 npm install @aquarela/time-to-cron
 ```
+
+You can also use it directly in the browser via jsDelivr:
+
+```html
+<!-- Latest version -->
+<script src="https://cdn.jsdelivr.net/npm/@aquarela/time-to-cron"></script>
+
+<!-- Specific version -->
+<script src="https://cdn.jsdelivr.net/npm/@aquarela/time-to-cron@2.1.1"></script>
+
+<!-- ES Module version -->
+<script type="module">
+  import { timeToCron } from "https://cdn.jsdelivr.net/npm/@aquarela/time-to-cron/dist/index.esm.js";
+</script>
+```
+
+When using via jsDelivr in the browser with a script tag, the function is available globally as `timeToCron`.
 
 ## Usage
 
