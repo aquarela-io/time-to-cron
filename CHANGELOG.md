@@ -1,3 +1,5 @@
+## [2.1.2](https://github.com/aquarela-io/time-to-cron/compare/v2.1.1...v2.1.2) (2024-12-28)
+
 ## [2.1.1](https://github.com/aquarela-io/time-to-cron/compare/v2.1.0...v2.1.1) (2024-12-27)
 
 
