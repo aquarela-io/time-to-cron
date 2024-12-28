@@ -1,13 +1,14 @@
 {
   "name": "@aquarela/time-to-cron",
   "version": "2.1.2",
-  "description": "Convert time to cron expression",
+  "description": "Utility library designed to convert time intervals into cron expressions",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "scripts": {
