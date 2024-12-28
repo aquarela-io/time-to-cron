@@ -138,6 +138,16 @@ To run the tests, execute the following command:
 npm test
 ```
 
+## Contributing
+
+We welcome contributions! Please follow these steps:
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Add your changes.
+4. Run `npm test` to ensure all tests pass.
+5. Submit a pull request.
+
 ## Repository
 
 For more information and to contribute, visit the [GitHub repository](https://github.com/aquarela-io/time-to-cron).
