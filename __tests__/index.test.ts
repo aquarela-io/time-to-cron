@@ -1,4 +1,5 @@
 import { timeToCron } from "../src/index";
+import { isValidCron } from "cron-validator";
 
 describe("@aquarela/timeToCron", () => {
   test("converts seconds correctly", () => {
@@ -133,6 +134,71 @@ describe("@aquarela/timeToCron", () => {
       expect(() => timeToCron("@invalid")).toThrow(
         "Invalid predefined schedule"
       );
+    });
+  });
+});
+
+describe("cron-validator validation", () => {
+  test("validates seconds expressions", () => {
+    const expressions = [
+      timeToCron(30),
+      timeToCron(60),
+      timeToCron(120),
+      timeToCron(3600),
+    ];
+    expressions.forEach((expr) => {
+      expect(isValidCron(expr, { seconds: true })).toBe(true);
+    });
+  });
+
+  test("validates minutes expressions", () => {
+    const expressions = [
+      timeToCron(30, "minutes"),
+      timeToCron(60, "minutes"),
+      timeToCron(120, "minutes"),
+    ];
+    expressions.forEach((expr) => {
+      expect(isValidCron(expr, { seconds: true })).toBe(true);
+    });
+  });
+
+  test("validates hours expressions", () => {
+    const expressions = [
+      timeToCron(2, "hours"),
+      timeToCron(24, "hours"),
+      timeToCron(48, "hours"),
+    ];
+    expressions.forEach((expr) => {
+      expect(isValidCron(expr, { seconds: true })).toBe(true);
+    });
+  });
+
+  test("validates days expressions", () => {
+    const expressions = [
+      timeToCron(1, "days"),
+      timeToCron(7, "days"),
+      timeToCron(15, "days"),
+      timeToCron(31, "days"),
+    ];
+    expressions.forEach((expr) => {
+      expect(isValidCron(expr, { seconds: true })).toBe(true);
+    });
+  });
+
+  test("validates predefined schedules", () => {
+    const expressions = [
+      timeToCron("@yearly"),
+      timeToCron("@annually"),
+      timeToCron("@monthly"),
+      timeToCron("@weekly"),
+      timeToCron("@daily"),
+      timeToCron("@midnight"),
+      timeToCron("@hourly"),
+      timeToCron("@every12hours"),
+      timeToCron("@biweekly"),
+    ];
+    expressions.forEach((expr) => {
+      expect(isValidCron(expr, { seconds: true })).toBe(true);
     });
   });
 });
